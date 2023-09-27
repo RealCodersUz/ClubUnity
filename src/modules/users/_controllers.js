@@ -41,9 +41,7 @@ const postRegisterUser = async (req, res, next) => {
  */
 const postLoginUser = async (req, res, next) => {
   try {
-    console.log("val");
     httpValidator({ body: req.body }, postLoginUserSchema);
-    console.log("after val");
 
     const result = await loginUser(req.body);
 
