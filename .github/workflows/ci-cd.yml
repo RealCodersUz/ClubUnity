@@ -1,0 +1,23 @@
+name: Deploy to DigitalOcean Droplet
+"on":
+    push:
+        branches:
+            - master
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy to DigitalOcean Droplet
+              uses: appleboy/ssh-action@master
+              with:
+                  host: 167.99.252.41
+                  username: "root"
+                  password: "orzU1234M"
+                  script: |
+                      export NVM_DIR=~/.nvm
+                      source ~/.nvm/nvm.sh
+                      cd simple-mvc-todo-app
+                      git pull origin master
+                      pm2 restart index.mjs
+                      echo 'ISHLADI.'

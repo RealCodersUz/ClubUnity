@@ -1,0 +1,88 @@
+2-tillik 
+-uz 
+-ru
+
+
+Admins
+
+admin password ni ozgartira olmaydi qolgan narsalarni tahrirlay oladi
+
+
+super_admin 
+
+Admins
+
+-id
+-full_name
+-email (forgot password) 
+-phone_number ----
+-username
+-password
+-is_super
+
+
+room
+
+-id
+-room_number
+-type_name
+-price
+-room_active (boolean)
+
+-is_deleted (boolean)
+
+
+food_categories
+
+-id
+-uz_name
+-ru_name
+-img
+-price
+-type ["good","food"]
+
+-is_deleted (boolean)
+
+
+food
+
+-uz_name
+-ru_name
+-price
+-count (default=1)
+-img
+-catgories_id
+
+-is_deleted (boolean)
+
+
+order
+
+-id
+-room_id
+-food_ids
+-total_price 
+-type ["vip","simple"] 
+
+-created_at
+-time (number)
+-is_active (boolean)
+
+-is_deleted (boolean)
+
+
+
+super_admin
+admin
+user
+
+super_admin hamma narsa qila oladi 
+
+
+
+
+admin xona qoshadi mahsulot-categoriya qoshadi 
+user buyurtma va mahsulot  qoshadi
+
+
+Statistikani admin va super_admin kora oladi  
