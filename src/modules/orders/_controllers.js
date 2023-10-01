@@ -7,11 +7,11 @@ const {
   showFoodSchema,
   deleteFoodSchema,
 } = require("./_schemas");
-const addFood = require("./addFood");
-const editFoodService = require("./editFood");
-const showFood = require("./showFood");
-const removeFood = require("./removeFood");
-const allFood = require("./allFood");
+const addFood = require("./addOrder");
+const editFoodService = require("./editOrder");
+const showFood = require("./showOrder");
+const removeFood = require("./removeOrder");
+const allFood = require("./allOrder");
 const { BadRequestError } = require("../../shared/errors");
 
 /**
@@ -120,7 +120,7 @@ const listFoods = async (req, res, next) => {
 
 const deleteFood = async (req, res, next) => {
   try {
-    httpValidator({ params: req.params }, deleteFoodSchema);
+    httpValidator({ body: req.body }, postFoodSchema);
 
     const result = await removeFood({ id: req.params.id });
 
