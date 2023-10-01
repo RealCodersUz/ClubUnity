@@ -1,11 +1,11 @@
 const { NotFoundError } = require("../../shared/errors");
-const Category = require("./Category");
+const Food = require("./Food");
 
-const showCategory = async ({ id }) => {
+const showFood = async ({ id }) => {
   try {
-    const data = await Category.findById(id);
+    const data = await Food.findById(id);
     if (!data) {
-      throw new NotFoundError("Category Not Found.");
+      throw new NotFoundError("Food Not Found.");
     }
 
     console.log(data);
@@ -23,4 +23,4 @@ const showCategory = async ({ id }) => {
   }
 };
 
-module.exports = showCategory;
+module.exports = showFood;

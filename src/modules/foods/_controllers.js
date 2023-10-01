@@ -1,17 +1,17 @@
 const express = require("express");
 const httpValidator = require("../../shared/http-validator");
 const {
-  postCategorySchema,
-  patchCategorySchema,
-  allCategorySchema,
-  showCategorySchema,
-  deleteCategorySchema,
+  postFoodSchema,
+  patchFoodSchema,
+  allFoodSchema,
+  showFoodSchema,
+  deleteFoodSchema,
 } = require("./_schemas");
-const addCategory = require("./addCategory");
-const editCategoryService = require("./editCategory");
-const showCategory = require("./showCategory");
-const removeCategory = require("./removeCategory");
-const allCategory = require("./allCategory");
+const addFood = require("./addFood");
+const editFoodService = require("./editFood");
+const showFood = require("./showFood");
+const removeFood = require("./removeFood");
+const allFood = require("./allFood");
 const { BadRequestError } = require("../../shared/errors");
 
 /**
@@ -19,17 +19,11 @@ const { BadRequestError } = require("../../shared/errors");
  * @param {express.Response} res
  * @param {express.NextFunction} next
  */
-const postCategory = async (req, res, next) => {
+const postFood = async (req, res, next) => {
   try {
-    httpValidator({ body: req.body }, postCategorySchema);
-    let data = { ...req.body, img: "" };
-    
-    if (req.file?.filename) {
-      //  const { filename } = req.file;
-      data.img = req.file?.filename;
-    }
-
-    const result = await addCategory(data);
+    httpValidator({ body: req.body }, postFoodSchema);
+    req.body.img = req.file?.filename;
+    const result = await addFood(req.body);
 
     res.status(201).json({
       data: result,
@@ -45,8 +39,8 @@ const postCategory = async (req, res, next) => {
  * @param {express.NextFunction} next
  */
 
-const editCategory = async (req, res, next) => {
-  const { error } = patchCategorySchema.body.validate(req.body);
+const editFood = async (req, res, next) => {
+  const { error } = patchFoodSchema.body.validate(req.body);
 
   if (error) {
     const details = error.details.map((err) => err.message).join(", ");
@@ -54,7 +48,7 @@ const editCategory = async (req, res, next) => {
   }
 
   try {
-    const result = await editCategoryService({
+    const result = await editFoodService({
       id: req.params.id || req.user.id,
       ...req.body,
     });
@@ -73,11 +67,11 @@ const editCategory = async (req, res, next) => {
  * @param {express.NextFunction} next
  */
 
-const getCategory = async (req, res, next) => {
+const getFood = async (req, res, next) => {
   try {
-    httpValidator({ params: req.params }, showCategorySchema);
+    httpValidator({ params: req.params }, showFoodSchema);
 
-    const result = await showCategory({ id: req.params.id });
+    const result = await showFood({ id: req.params.id });
 
     res.status(200).json({
       data: result,
@@ -93,9 +87,9 @@ const getCategory = async (req, res, next) => {
  * @param {express.NextFunction} next
  */
 
-const listCategorys = async (req, res, next) => {
+const listFoods = async (req, res, next) => {
   try {
-    httpValidator({ query: req.query }, allCategorySchema);
+    httpValidator({ query: req.query }, allFoodSchema);
 
     const { query } = req;
     const offset =
@@ -107,7 +101,7 @@ const listCategorys = async (req, res, next) => {
         ? parseInt(query.page.limit)
         : undefined;
 
-    const result = await allCategory({ ...query, page: { limit, offset } });
+    const result = await allFood({ ...query, page: { limit, offset } });
 
     res.status(200).json({
       data: result.data,
@@ -124,11 +118,11 @@ const listCategorys = async (req, res, next) => {
  * @param {express.NextFunction} next
  */
 
-const deleteCategory = async (req, res, next) => {
+const deleteFood = async (req, res, next) => {
   try {
-    httpValidator({ body: req.body }, postCategorySchema);
+    httpValidator({ body: req.body }, postFoodSchema);
 
-    const result = await removeCategory({ id: req.params.id });
+    const result = await removeFood({ id: req.params.id });
 
     res.status(200).json({
       data: result,
@@ -139,9 +133,9 @@ const deleteCategory = async (req, res, next) => {
 };
 
 module.exports = {
-  postCategory,
-  editCategory,
-  getCategory,
-  deleteCategory,
-  listCategorys,
+  postFood,
+  editFood,
+  getFood,
+  deleteFood,
+  listFoods,
 };

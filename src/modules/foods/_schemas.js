@@ -1,31 +1,35 @@
 const Joi = require("joi");
 
-exports.postCategorySchema = {
+exports.postFoodSchema = {
   body: Joi.object({
     uz_name: Joi.string().required(),
     ru_name: Joi.string().required(),
+    price: Joi.number().required(),
+    categories_id: Joi.string().required(),
     type: Joi.string().valid("good", "food").required(),
   }),
 };
 
-exports.patchCategorySchema = {
+exports.patchFoodSchema = {
   params: Joi.object({
     id: Joi.number(),
   }),
   body: Joi.object({
     uz_name: Joi.string(),
     ru_name: Joi.string(),
+    price: Joi.number(),
+    categories_id: Joi.string(),
     type: Joi.boolean(),
   }),
 };
 
-exports.showCategorySchema = {
+exports.showFoodSchema = {
   params: Joi.object({
     id: Joi.string(),
   }),
 };
 
-exports.allCategorySchema = {
+exports.allFoodSchema = {
   query: Joi.object({
     q: Joi.string(),
     sort: Joi.object({
@@ -42,7 +46,7 @@ exports.allCategorySchema = {
   }),
 };
 
-exports.deleteCategorySchema = {
+exports.deleteFoodSchema = {
   params: Joi.object({
     id: Joi.string(),
   }),

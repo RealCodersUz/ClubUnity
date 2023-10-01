@@ -7,7 +7,7 @@ const handleError = require("./shared/errors/handle");
 const UserRoute = require("./modules/users/_api");
 const RoomRoute = require("./modules/rooms/_api");
 const FoodCategories = require("./modules/food_categories/_api");
-// const UserGuideRoute = require("./modules/user_guide/_api");
+const Foods = require("./modules/foods/_api");
 
 const app = express();
 
@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(RoomRoute);
 app.use(UserRoute);
 app.use(FoodCategories);
+app.use(Foods);
 // app.use(UserGuideRoute);
 
 app.use(handleError);
