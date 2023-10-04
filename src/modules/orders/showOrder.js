@@ -12,8 +12,10 @@ const showOrder = async ({ id }) => {
 
     const result = {
       // _id: data._id,
-      uz_name: data.uz_name,
-      ru_name: data.ru_name,
+      room_id: data.room_id,
+      food_ids: data.food_ids,
+      total_price: data.total_price,
+      is_active: data.is_active,
       type: data.type,
     };
 

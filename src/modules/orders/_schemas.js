@@ -3,8 +3,9 @@ const Joi = require("joi");
 exports.postOrderSchema = {
   body: Joi.object({
     room_id: Joi.string().required(),
-    order_ids: Joi.string(),
+    food_ids: Joi.array(),
     time: Joi.string().required(),
+    total_price: Joi.number().required(),
     type: Joi.string().valid("vip", "simple").required(),
     is_active: Joi.boolean(),
   }),
@@ -16,8 +17,9 @@ exports.patchOrderSchema = {
   }),
   body: Joi.object({
     room_id: Joi.string(),
-    order_ids: Joi.string(),
+    food_ids: Joi.array(),
     time: Joi.string(),
+    total_price: Joi.number(),
     type: Joi.string().valid("vip", "simple"),
     is_active: Joi.boolean(),
   }),
@@ -33,7 +35,7 @@ exports.allOrderSchema = {
   query: Joi.object({
     q: Joi.string(),
     sort: Joi.object({
-      by: Joi.string().valid("price", "_id"),
+      by: Joi.string().valid("total_price", "_id"),
       order: Joi.string().valid("asc", "desc"),
     }),
     page: Joi.object({

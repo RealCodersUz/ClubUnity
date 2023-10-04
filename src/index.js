@@ -8,6 +8,7 @@ const UserRoute = require("./modules/users/_api");
 const RoomRoute = require("./modules/rooms/_api");
 const FoodCategories = require("./modules/food_categories/_api");
 const Foods = require("./modules/foods/_api");
+const Orders = require("./modules/orders/_api");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(RoomRoute);
 app.use(UserRoute);
 app.use(FoodCategories);
 app.use(Foods);
+app.use(Orders);
 // app.use(UserGuideRoute);
 
 app.use(handleError);

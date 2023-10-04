@@ -2,19 +2,19 @@ const Order = require("./Order");
 
 const allOrder = async (query) => {
   try {
-    const { q, sort, page, limit } = query || {};
+    const { sort, page, limit } = query || {};
 
     const searchQuery = {};
     const sortOptions = {};
     const paginationOptions = {};
 
     // Search
-    if (q) {
-      const nameQuery = {
-        $or: [{ type_name: { $regex: q, $options: "i" } }],
-      };
-      searchQuery.$and = [nameQuery];
-    }
+    // if (q) {
+    //   const nameQuery = {
+    //     $or: [{ : { $regex: q, $options: "i" } }],
+    //   };
+    //   searchQuery.$and = [nameQuery];
+    // }
 
     // Filtering
 

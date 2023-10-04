@@ -11,7 +11,8 @@ const allFood = async (query) => {
     // Search
     if (q) {
       const nameQuery = {
-        $or: [{ type_name: { $regex: q, $options: "i" } }],
+        uz_name: { $regex: new RegExp(q, "i") }, // Case-insensitive regex search for q
+        ru_name: { $regex: new RegExp(q, "i") }, // Case-insensitive regex search for ru_name
       };
       searchQuery.$and = [nameQuery];
     }

@@ -1,17 +1,17 @@
 const express = require("express");
 const httpValidator = require("../../shared/http-validator");
 const {
-  postFoodSchema,
-  patchFoodSchema,
-  allFoodSchema,
-  showFoodSchema,
-  deleteFoodSchema,
+  postOrderSchema,
+  patchOrderSchema,
+  allOrderSchema,
+  showOrderSchema,
+  deleteOrderSchema,
 } = require("./_schemas");
-const addFood = require("./addOrder");
-const editFoodService = require("./editOrder");
-const showFood = require("./showOrder");
-const removeFood = require("./removeOrder");
-const allFood = require("./allOrder");
+const addOrder = require("./addOrder");
+const editOrderService = require("./editOrder");
+const showOrder = require("./showOrder");
+const removeOrder = require("./removeOrder");
+const allOrder = require("./allOrder");
 const { BadRequestError } = require("../../shared/errors");
 
 /**
@@ -19,11 +19,11 @@ const { BadRequestError } = require("../../shared/errors");
  * @param {express.Response} res
  * @param {express.NextFunction} next
  */
-const postFood = async (req, res, next) => {
+const postOrder = async (req, res, next) => {
   try {
-    httpValidator({ body: req.body }, postFoodSchema);
+    httpValidator({ body: req.body }, postOrderSchema);
     req.body.img = req.file?.filename;
-    const result = await addFood(req.body);
+    const result = await addOrder(req.body);
 
     res.status(201).json({
       data: result,
@@ -39,8 +39,8 @@ const postFood = async (req, res, next) => {
  * @param {express.NextFunction} next
  */
 
-const editFood = async (req, res, next) => {
-  const { error } = patchFoodSchema.body.validate(req.body);
+const editOrder = async (req, res, next) => {
+  const { error } = patchOrderSchema.body.validate(req.body);
 
   if (error) {
     const details = error.details.map((err) => err.message).join(", ");
@@ -48,7 +48,7 @@ const editFood = async (req, res, next) => {
   }
 
   try {
-    const result = await editFoodService({
+    const result = await editOrderService({
       id: req.params.id || req.user.id,
       ...req.body,
     });
@@ -67,11 +67,11 @@ const editFood = async (req, res, next) => {
  * @param {express.NextFunction} next
  */
 
-const getFood = async (req, res, next) => {
+const getOrder = async (req, res, next) => {
   try {
-    httpValidator({ params: req.params }, showFoodSchema);
+    httpValidator({ params: req.params }, showOrderSchema);
 
-    const result = await showFood({ id: req.params.id });
+    const result = await showOrder({ id: req.params.id });
 
     res.status(200).json({
       data: result,
@@ -87,9 +87,9 @@ const getFood = async (req, res, next) => {
  * @param {express.NextFunction} next
  */
 
-const listFoods = async (req, res, next) => {
+const listOrders = async (req, res, next) => {
   try {
-    httpValidator({ query: req.query }, allFoodSchema);
+    httpValidator({ query: req.query }, allOrderSchema);
 
     const { query } = req;
     const offset =
@@ -101,7 +101,7 @@ const listFoods = async (req, res, next) => {
         ? parseInt(query.page.limit)
         : undefined;
 
-    const result = await allFood({ ...query, page: { limit, offset } });
+    const result = await allOrder({ ...query, page: { limit, offset } });
 
     res.status(200).json({
       data: result.data,
@@ -118,11 +118,11 @@ const listFoods = async (req, res, next) => {
  * @param {express.NextFunction} next
  */
 
-const deleteFood = async (req, res, next) => {
+const deleteOrder = async (req, res, next) => {
   try {
-    httpValidator({ body: req.body }, postFoodSchema);
+    httpValidator({ params: req.params }, deleteOrderSchema);
 
-    const result = await removeFood({ id: req.params.id });
+    const result = await removeOrder({ id: req.params.id });
 
     res.status(200).json({
       data: result,
@@ -133,9 +133,9 @@ const deleteFood = async (req, res, next) => {
 };
 
 module.exports = {
-  postFood,
-  editFood,
-  getFood,
-  deleteFood,
-  listFoods,
+  postOrder,
+  editOrder,
+  getOrder,
+  deleteOrder,
+  listOrders,
 };
